@@ -40,7 +40,7 @@ public class ArFont {
         return getText();
     }
 
-    public String getText(String given) {
+    public String getRTLText(String given) {
         char[] chars = given.toCharArray();
         for (char c : chars)
             addChar(new ArGlyph(c));
