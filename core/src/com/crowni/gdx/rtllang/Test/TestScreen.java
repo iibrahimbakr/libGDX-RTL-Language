@@ -63,7 +63,7 @@ public class TestScreen extends BaseScreen {
         BitmapFont freeTypeFont = generator.generateFont(parameter);
         Label label = new Label(arFont.getRTLText(ARABIC_LANGUAGE), new Label.LabelStyle(freeTypeFont, Color.WHITE));
         label.setAlignment(Align.center);
-        label.setPosition(256F, 400F, Align.right);
+        label.setPosition(512F, 400F, Align.right);
         stage.addActor(label);
 
         /** BITMAP FONT FONT 1 **/
