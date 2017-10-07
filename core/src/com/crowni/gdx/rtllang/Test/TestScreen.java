@@ -52,14 +52,14 @@ public class TestScreen extends BaseScreen {
         label = new Label("", new Label.LabelStyle(fontJf_flat, Color.WHITE));
         label.setAlignment(Align.center);
         label.setPosition(512F, 400F, Align.right);
-        label.setText(arFont.getText(ARABIC_LANGUAGE));
+        label.setText(arFont.getRTLText(ARABIC_LANGUAGE));
         stage.addActor(label);
 
         BitmapFont fontArabic = new BitmapFont(Gdx.files.internal("fonts/arabic.fnt"));
         TextArea.TextFieldStyle style = new TextField.TextFieldStyle();
         style.font = fontArabic;
         style.fontColor = Color.GOLD;
-        TextField textField = new TextField(arFont.getText(INSERT_YOUR_NAME), style);
+        TextField textField = new TextField(arFont.getRTLText(INSERT_YOUR_NAME), style);
         textField.setAlignment(Align.right);
         textField.setSize(BaseScreen.WIDTH, 100F);
         textField.setPosition(BaseScreen.WIDTH - 10F, BaseScreen.HEIGHT / 2 - 30F, Align.right);
