@@ -1,11 +1,11 @@
-## RTL-Language Test in libGDX
-This is a simple project can be render RTL language correctly using `BitmapFont`:
+# RTL-Language Test in libGDX
+This is a simple project can be render RTL language correctly using `BitmapFont` and `FreeType`:
 * **Arabic Test**
 
 ![](https://media.giphy.com/media/26FfbTemBGnNneLM4/giphy.gif)
 
-* **Usage:**
-
+***
+### 1. Using `BitmapFont`
 1. Open `Hiero.jar`.
 2. Put any freetype font `.ttf` , `.otf` which support RTL languages into `Hiero.jar`.
 3. Add RTL letters in `Hiero`.
@@ -208,9 +208,27 @@ This is a simple project can be render RTL language correctly using `BitmapFont`
 > ﻻ
 > ﻼ
 2. Code
+``` java
+ArFont arFont = new ArFont();
+arFont.getRTLText("string");         // arabic text putting as a parameter to return correct RTL string.
+arFont.typing('char');               // type arabic letter by letter.
+```
 
-        ArFont arFont = new ArFont();
-        arFont.getRTLText(string);         // arabic text putting as a parameter to return correct RTL string.
-        arFont.typing(char);               // type arabic letter by letter.
+***
+### 2. Using `FreeType`
+``` java
+FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/jf_flat.ttf"));
+FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        
+parameter.characters += ArUtils.getAllChars().toString(""); // Arabic characters addition to exist characters.
+parameter.size = 48;
+parameter.color = Color.BROWN;
+parameter.borderColor = Color.GOLD;
+parameter.borderWidth = 1.5f;
+parameter.minFilter = Texture.TextureFilter.Linear;
+parameter.magFilter = Texture.TextureFilter.Linear;
+
+BitmapFont freeTypeFont = generator.generateFont(parameter);
+```
 
 **That's it**
