@@ -1,5 +1,5 @@
 # RTL-Language Test in libGDX
-This is a simple project can be render RTL language correctly using `BitmapFont` and `FreeType`:
+This is a simple project can be render RTL languages correctly using `BitmapFont` and `FreeType`:
 * **Arabic Test**
 
 ![](https://media.giphy.com/media/26FfbTemBGnNneLM4/giphy.gif)

@@ -17,14 +17,15 @@
  *
  */
 
-package com.crowni.gdx.rtllang.arabic;
+package com.crowni.gdx.rtllang.support;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.CharArray;
 
 import java.awt.event.KeyEvent;
 
-import static com.crowni.gdx.rtllang.arabic.ArUtils.getIndividualChar;
+import static com.crowni.gdx.rtllang.support.ArUtils.getIndividualChar;
 
 /**
  * Created by Crowni on 10/5/2017.
@@ -36,14 +37,14 @@ public class ArFont {
         if (c == KeyEvent.VK_BACK_SPACE)
             popChar();
         else
-            addChar(new ArGlyph(c));
+            addChar(new ArGlyph(c, !ArUtils.isLTR(c)));
         return getText();
     }
 
-    public String getRTLText(String given) {
+    public String getText(String given) {
         char[] chars = given.toCharArray();
         for (char c : chars)
-            addChar(new ArGlyph(c));
+            addChar(new ArGlyph(c, !ArUtils.isLTR(c)));
         String text = getText();
         this.glyphs.clear();
         return text;
@@ -51,7 +52,7 @@ public class ArFont {
 
     private void addChar(ArGlyph glyph) {
         glyphs.add(glyph);
-        for (int i = 1; i <= 2; i++)
+        for (int i = 1; i <= 2; i += 1)
             filterLastChars(i);
 
         /** CONSOLE **/
@@ -72,10 +73,50 @@ public class ArFont {
     }
 
     private String getText() {
+        CharArray ltrChars = new CharArray();
         String text = "";
-        for (int i = glyphs.size - 1; i >= 0; i--)
-            text += glyphs.get(i).getChar();
+
+        // add only LTR characters into array.
+        for (int i = glyphs.size - 1; i >= 0; i--) {
+            if (glyphs.get(i).isRTL()) break;
+
+            ltrChars.add(glyphs.get(i).getOriginalChar());
+        }
+
+        // fix space between RTL and LTR characters.
+        fixSpace(ltrChars);
+
+        // reverse LTR characters and update main glyphs.
+        for (int i = glyphs.size - 1; i >= 0; i--) {
+            if (glyphs.get(i).isRTL()) break;
+
+            glyphs.get(i).setChar(ltrChars.pop());
+        }
+
+        // append glyphs together.
+        for (int i = glyphs.size - 1; i >= 0; i--) {
+            char c = glyphs.get(i).getChar();
+            text += c == KeyEvent.KEY_LOCATION_UNKNOWN ? KeyEvent.VK_SPACE : c;
+        }
+
         return text;
+    }
+
+    /**
+     * This method can fix approximately the space between RTL and LTR characters.
+     *
+     * @param ltrChars contains LTR characters ONLY.
+     */
+    private void fixSpace(CharArray ltrChars) {
+        if (ltrChars.size > 0)
+            if (ltrChars.first() == KeyEvent.VK_SPACE || ltrChars.first() == KeyEvent.KEY_LOCATION_UNKNOWN) {
+                if (ltrChars.first() == KeyEvent.VK_SPACE && ltrChars.peek() == KeyEvent.VK_SPACE)
+                    return;
+                ltrChars.add(ltrChars.removeIndex(0));
+
+            } else if (ltrChars.peek() == KeyEvent.VK_SPACE || ltrChars.peek() == KeyEvent.KEY_LOCATION_UNKNOWN)
+                ltrChars.insert(0, ltrChars.pop());
+
     }
 
     /**
@@ -93,6 +134,8 @@ public class ArFont {
      * @return ArGlyph after filtering process.
      */
     private ArGlyph filter(ArGlyph glyph) {
+        if (!glyph.isRTL()) return glyph;
+
         ArGlyph before = getPositionGlyph(glyph, -1);
         ArGlyph after = getPositionGlyph(glyph, +1);
 
@@ -138,12 +181,12 @@ public class ArFont {
 
     /**
      * @param arGlyph current glyph.
-     * @param pos     value -1 is before arGlyph or +1 is after arGlyph.
-     * @return
+     * @param pos     value always between [-1,1] : -1 is before arGlyph or +1 is after arGlyph.
+     * @return correct position of glyph.
      */
     private ArGlyph getPositionGlyph(ArGlyph arGlyph, int pos) {
         int i = glyphs.lastIndexOf(arGlyph, false) + (pos = MathUtils.clamp(pos, -1, 1));
-        ArGlyph glyph = (pos > 0 ? i < glyphs.size : i > -1) ? glyph = glyphs.get(i) : null;
+        ArGlyph glyph = (pos > 0 ? i < glyphs.size : i > -1) ? glyphs.get(i) : null;
         return glyph != null ? ArUtils.isInvalidChar(glyph.getOriginalChar()) ? null : glyph : null;
     }
 

@@ -17,10 +17,10 @@
  *
  */
 
-package com.crowni.gdx.rtllang.arabic;
+package com.crowni.gdx.rtllang.support;
 
 import com.badlogic.gdx.utils.CharArray;
-import com.crowni.gdx.rtllang.arabic.ArCharCode.*;
+import com.crowni.gdx.rtllang.support.ArCharCode.*;
 
 /**
  * Created by Crowni on 10/5/2017.
@@ -36,6 +36,10 @@ public class ArUtils {
 
     public static boolean isInvalidChar(char c) {
         return getCharType(c) == EMPTY;
+    }
+
+    public static boolean isLTR(char c) {
+        return Languages.inRange(Languages.ENGLISH, c);
     }
 
     public static int getCharType(char c) {

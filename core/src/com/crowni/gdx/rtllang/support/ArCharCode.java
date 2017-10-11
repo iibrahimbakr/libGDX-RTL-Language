@@ -17,17 +17,21 @@
  *
  */
 
-package com.crowni.gdx.rtllang.arabic;
+package com.crowni.gdx.rtllang.support;
 
 /**
  * Created by Crowni on 10/2/2017.
  **/
 
 public class ArCharCode {
+    public static final int X0 = 0;
     public static final int X2 = 2;
     public static final int X4 = 4;
 
     public enum IndividualChar {
+        SPACE(32, X0),
+        EMPTY(0, X0),
+
         /************** X2 *************/
         ALF(1575, X2),
         ALF_MAD(1570, X2),
@@ -102,6 +106,10 @@ public class ArCharCode {
     }
 
     public enum EndChar {
+        SPACE(32, X0),
+        EMPTY(0, X0),
+
+        /************** X2 *************/
         ALF(65166, X2),
         ALF_MAD(65154, X2),
         ALF_HAMZA_UP(65156, X2),
@@ -175,6 +183,10 @@ public class ArCharCode {
     }
 
     public enum StartChar {
+        SPACE(32, X0),
+        EMPTY(0, X0),
+
+        /************** X2 *************/
         ALF(1575, X2),
         ALF_MAD(1570, X2),
         ALF_HAMZA_UP(1571, X2),
@@ -247,6 +259,10 @@ public class ArCharCode {
     }
 
     public enum CenterChar {
+        SPACE(32, X0),
+        EMPTY(0, X0),
+
+        /************** X2 *************/
         ALF(65166, X2),
         ALF_MAD(1570, X2),
         ALF_HAMZA_UP(65156, X2),

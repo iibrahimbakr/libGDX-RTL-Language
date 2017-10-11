@@ -26,8 +26,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
-import com.crowni.gdx.rtllang.arabic.ArFont;
-import com.crowni.gdx.rtllang.arabic.ArUtils;
+import com.crowni.gdx.rtllang.support.ArFont;
+import com.crowni.gdx.rtllang.support.ArUtils;
 import com.crowni.gdx.rtllang.utils.BaseScreen;
 
 /**
@@ -36,8 +36,8 @@ import com.crowni.gdx.rtllang.utils.BaseScreen;
 public class TestScreen extends BaseScreen {
     private static final String TAG = TestScreen.class.getSimpleName();
 
-    private static final String ARABIC_LANGUAGE = "اللغة العربية";
-    private static final String INSERT_YOUR_NAME = "أدخل إسمك";
+    private static final String ARABIC_LANGUAGE = "اللغة العربية Arabic Languages";
+    private static final String INSERT_YOUR_NAME = "أدخل إسمك Insert Your Name";
 
     private ArFont arFont = new ArFont();
 
@@ -57,31 +57,39 @@ public class TestScreen extends BaseScreen {
         parameter.color = Color.BROWN;
         parameter.borderColor = Color.GOLD;
         parameter.borderWidth = 1.5f;
+        parameter.shadowColor = Color.DARK_GRAY;
+        parameter.shadowOffsetX = +5;
+        parameter.shadowOffsetY = +5;
         parameter.minFilter = Texture.TextureFilter.Linear;
         parameter.magFilter = Texture.TextureFilter.Linear;
 
         BitmapFont freeTypeFont = generator.generateFont(parameter);
-        Label label = new Label(arFont.getRTLText(ARABIC_LANGUAGE), new Label.LabelStyle(freeTypeFont, Color.WHITE));
+        Label label = new Label(arFont.getText(ARABIC_LANGUAGE), new Label.LabelStyle(freeTypeFont, Color.WHITE));
+        label.layout();
         label.setAlignment(Align.center);
-        label.setPosition(512F, 400F, Align.right);
+        label.setPosition(512F, 400F, Align.center);
         stage.addActor(label);
 
-        /** BITMAP FONT FONT 1 **/
-//        BitmapFont bitmapFontJf_flat = new BitmapFont(Gdx.files.internal("fonts/jf_flat.fnt"));
-//        label = new Label(arFont.getRTLText(ARABIC_LANGUAGE), new Label.LabelStyle(bitmapFontJf_flat, Color.WHITE));
+        /**
+         * BITMAP FONT FONT 1
+         **/
+//        BitmapFont bitmapFontArabic = new BitmapFont(Gdx.files.internal("fonts/arabic.fnt"));
+//        label = new Label(arFont.getText(ARABIC_LANGUAGE), new Label.LabelStyle(bitmapFontJf_flat, Color.WHITE));
 //        label.setAlignment(Align.center);
 //        label.setPosition(512F + 256F, 400F, Align.right);
 //        stage.addActor(label);
 
-        /** BITMAP FONT FONT 2 **/
-        BitmapFont bitmapFontArabic = new BitmapFont(Gdx.files.internal("fonts/arabic.fnt"));
+        /**
+         * BITMAP FONT FONT 2
+         **/
         TextArea.TextFieldStyle style = new TextField.TextFieldStyle();
-        style.font = bitmapFontArabic;
+        style.font = new BitmapFont(Gdx.files.internal("fonts/jf_flat.fnt"));
         style.fontColor = Color.GOLD;
-        TextField textField = new TextField(arFont.getRTLText(INSERT_YOUR_NAME), style);
+
+        TextField textField = new TextField(arFont.getText(INSERT_YOUR_NAME), style);
         textField.setAlignment(Align.right);
         textField.setSize(BaseScreen.WIDTH, 100F);
-        textField.setPosition(BaseScreen.WIDTH - 10F, BaseScreen.HEIGHT / 2 - 30F, Align.right);
+        textField.setPosition(BaseScreen.WIDTH - 10F, BaseScreen.HEIGHT / 2 - 45F, Align.right);
         stage.addActor(textField);
 
         textField.setTextFieldListener(new TextField.TextFieldListener() {

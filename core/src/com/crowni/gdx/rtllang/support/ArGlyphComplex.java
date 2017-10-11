@@ -17,36 +17,50 @@
  *
  */
 
-package com.crowni.gdx.rtllang.arabic;
+package com.crowni.gdx.rtllang.support;
+
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Crowni on 10/5/2017.
  **/
 
-public class ArGlyph {
+public class ArGlyphComplex extends ArGlyph {
 
-    protected final char originalChar;
-    protected final int type;
-    protected char modifiedChar;
+    private Array<ArGlyph> simpleGlyphs;
 
-    public ArGlyph(char c) {
-        this.originalChar = c;
-        type = ArUtils.getCharType(c);
+    // originalChar is a complex
+    public ArGlyphComplex(char complexChar) {
+        super(complexChar, true);
+        simpleGlyphs = new Array<ArGlyph>();
     }
 
-    public char getOriginalChar() {
-        return originalChar;
+    public Array<ArGlyph> getSimpleChars() {
+        return simpleGlyphs;
     }
 
-    public char getChar() {
+    public ArGlyph getElementChar(int i) {
+        return simpleGlyphs.get(i);
+    }
+
+    public char getComplexChar() {
         return modifiedChar;
     }
 
-    public void setChar(char c) {
+    public void setComplexChar(char c) {
         this.modifiedChar = c;
     }
 
     public int getType() {
         return type;
+    }
+
+    public void setSimpleGlyphs(ArGlyph... glyphs) {
+        if (simpleGlyphs.size == 0)
+            simpleGlyphs.addAll(glyphs);
+    }
+
+    public void setSimpleGlyphs(Array<ArGlyph> glyphs) {
+        this.simpleGlyphs = glyphs;
     }
 }
