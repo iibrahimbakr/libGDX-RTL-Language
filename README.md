@@ -211,7 +211,7 @@ This is a simple project can be render RTL language correctly using `BitmapFont`
 2. Code
 ``` java
 ArFont arFont = new ArFont();
-arFont.getRTLText("string");  // arabic text putting as a parameter to return correct RTL string.
+arFont.getText("string");     // text putting as a parameter to return correct RTL, LTR or both string.
 arFont.typing('char');        // type arabic letter by letter.
 ```
 
