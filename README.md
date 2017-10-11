@@ -1,8 +1,9 @@
 # RTL-Language Test in libGDX
-This is a simple project can be render RTL languages correctly using `BitmapFont` and `FreeType`:
-* **Arabic Test**
+This is a simple project can be render RTL language correctly using `BitmapFont` and `FreeType`:
 
-![](https://media.giphy.com/media/26FfbTemBGnNneLM4/giphy.gif)
+## **Support both RTL & LTR.**
+
+![](https://media.giphy.com/media/d47HKuc3PPCeVipi/giphy.gif)
 
 ***
 ### 1. Using `BitmapFont`
@@ -210,8 +211,8 @@ This is a simple project can be render RTL languages correctly using `BitmapFont
 2. Code
 ``` java
 ArFont arFont = new ArFont();
-arFont.getRTLText("string");         // arabic text putting as a parameter to return correct RTL string.
-arFont.typing('char');               // type arabic letter by letter.
+arFont.getRTLText("string");  // arabic text putting as a parameter to return correct RTL string.
+arFont.typing('char');        // type arabic letter by letter.
 ```
 
 ***
