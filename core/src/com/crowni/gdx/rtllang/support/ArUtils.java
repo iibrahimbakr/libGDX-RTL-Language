@@ -39,12 +39,13 @@ public class ArUtils {
     }
 
     public static boolean isLTR(char c) {
-        return Languages.inRange(Languages.ENGLISH, c);
+        return Languages.inRange(Languages.ENGLISH, c) || Languages.inRange(Languages.ARABIC_NUMERIC, c) || Languages.inRange(Languages.EXTENDED_NUMERIC, c);
     }
 
     public static int getCharType(char c) {
         for (IndividualChar individualChar : chars)
-            if (individualChar.getChar() == c) return individualChar.getType();
+            if (individualChar.getChar() == c)
+                return individualChar.getType();
         return 0;
     }
 
