@@ -73,50 +73,28 @@ public class ArFont {
     }
 
     private String getText() {
-        CharArray ltrChars = new CharArray();
         String text = "";
 
-        // add only LTR characters into array.
+        boolean inserting = true;
+        String subtext = "";
         for (int i = glyphs.size - 1; i >= 0; i--) {
-            if (glyphs.get(i).isRTL()) break;
+            if (glyphs.get(i).isRTL() || glyphs.get(i).isSpace()) {
+                if (!inserting) {
+                    inserting = true;
+                    text += subtext;
+                    subtext = "";
+                }
 
-            ltrChars.add(glyphs.get(i).getOriginalChar());
+                text += glyphs.get(i).getChar();
+            } else {
+                inserting = false;
+                subtext = glyphs.get(i).getOriginalChar() + subtext;
+            }
         }
 
-        // fix space between RTL and LTR characters.
-        fixSpace(ltrChars);
-
-        // reverse LTR characters and update main glyphs.
-        for (int i = glyphs.size - 1; i >= 0; i--) {
-            if (glyphs.get(i).isRTL()) break;
-
-            glyphs.get(i).setChar(ltrChars.pop());
-        }
-
-        // append glyphs together.
-        for (int i = glyphs.size - 1; i >= 0; i--) {
-            char c = glyphs.get(i).getChar();
-            text += c == KeyEvent.KEY_LOCATION_UNKNOWN ? KeyEvent.VK_SPACE : c;
-        }
+        text += subtext;
 
         return text;
-    }
-
-    /**
-     * This method can fix approximately the space between RTL and LTR characters.
-     *
-     * @param ltrChars contains LTR characters ONLY.
-     */
-    private void fixSpace(CharArray ltrChars) {
-        if (ltrChars.size > 0)
-            if (ltrChars.first() == KeyEvent.VK_SPACE || ltrChars.first() == KeyEvent.KEY_LOCATION_UNKNOWN) {
-                if (ltrChars.first() == KeyEvent.VK_SPACE && ltrChars.peek() == KeyEvent.VK_SPACE)
-                    return;
-                ltrChars.add(ltrChars.removeIndex(0));
-
-            } else if (ltrChars.peek() == KeyEvent.VK_SPACE || ltrChars.peek() == KeyEvent.KEY_LOCATION_UNKNOWN)
-                ltrChars.insert(0, ltrChars.pop());
-
     }
 
     /**
@@ -134,7 +112,9 @@ public class ArFont {
      * @return ArGlyph after filtering process.
      */
     private ArGlyph filter(ArGlyph glyph) {
-        if (!glyph.isRTL()) return glyph;
+        if (!glyph.isRTL()) {
+            return glyph;
+        }
 
         ArGlyph before = getPositionGlyph(glyph, -1);
         ArGlyph after = getPositionGlyph(glyph, +1);
