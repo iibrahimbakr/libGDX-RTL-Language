@@ -3,7 +3,7 @@ This is a simple project can be render RTL language correctly using `BitmapFont`
 
 ## **Support both RTL & LTR.**
 
-![](https://media.giphy.com/media/d47HKuc3PPCeVipi/giphy.gif)
+![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTY5YTQyZTg1YzlhYzc2Yzg1Y2MzMTRmZGU2YWY5N2VmMTcxMzFkZCZjdD1n/eZW752Ak1LLzDZ1xe0/giphy.gif)
 
 ***
 ### 1. Using `BitmapFont`
